@@ -44,34 +44,46 @@ class PostsController extends Controller
      */
     public function show(Post $post)
     {
-        // $post = Post::findOrFail($id);
-        
+        $comments = $post->comments;
         return view('posts.show')->with([
             'post' => $post,
+            'comments' => $comments,
         ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        return "Pagina del formulario de edicion ({$id})";
+        return view('posts.edit')->with([
+            'post' => $post,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+
+
+        $post->update([
+            'title' => $request->input('title'),
+            'excerpt' => $request->input('excerpt'),
+            'content' => $request->input('content'),
+        ]);
+
+        return redirect('/');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Post $post)
     {
-        //
+        $post->delete();
+
+        return redirect('/');
     }
 }
