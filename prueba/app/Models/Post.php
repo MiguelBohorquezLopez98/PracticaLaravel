@@ -14,4 +14,8 @@ class Post extends Model
         'excerpt',
         'content'
     ];
+
+    public function comments(){
+        return $this->hasMany(Comment::class); // comments.post_id
+    }
 }
